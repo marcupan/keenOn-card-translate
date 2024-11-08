@@ -1,11 +1,12 @@
-from flask import Flask
 from concurrent import futures
+
 import grpc
-import translation_pb2
-import translation_pb2_grpc
-from services.translation_service import TranslationService
+from proto import translation_pb2, translation_pb2_grpc
+from flask import Flask
 from grpc_reflection.v1alpha import reflection
+
 from config import Config
+from services.translation_service import TranslationService
 
 app = Flask(__name__)
 

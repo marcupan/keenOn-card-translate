@@ -1,7 +1,5 @@
 .idea
 .venv
 .env
-.env.development
-.env.production
-old_*.py
+.env.*
 *.backup.*

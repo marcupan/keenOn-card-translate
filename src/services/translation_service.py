@@ -1,9 +1,9 @@
 import grpc
-from translation_pb2 import TranslationResponse
-import translation_pb2_grpc
+from proto.translation_pb2 import TranslationResponse
+from proto.translation_pb2_grpc import TranslationServiceServicer
 
 
-class TranslationService(translation_pb2_grpc.TranslationServiceServicer):
+class TranslationService(TranslationServiceServicer):
     def Translate(self, request, context):
         chinese_word = request.chinese_word
         if not chinese_word:
