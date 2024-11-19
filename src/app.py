@@ -1,12 +1,13 @@
+from threading import Thread
 from concurrent import futures
-
 import grpc
-from proto import translation_pb2, translation_pb2_grpc
+
 from flask import Flask
 from grpc_reflection.v1alpha import reflection
 
 from config import Config
 from services.translation_service import TranslationService
+from src.proto import translation_pb2_grpc, translation_pb2
 
 app = Flask(__name__)
 
@@ -19,12 +20,11 @@ SERVICE_NAMES = (
 )
 reflection.enable_server_reflection(SERVICE_NAMES, grpc_server)
 
-
 def start_grpc_server():
     grpc_server.add_insecure_port(f'[::]:{Config.GRPC_RUN_PORT}')
     grpc_server.start()
 
-
 if __name__ == '__main__':
-    start_grpc_server()
+    grpc_thread = Thread(target=start_grpc_server)
+    grpc_thread.start()
     app.run(debug=True, host='0.0.0.0', port=Config.FLASK_RUN_PORT)
