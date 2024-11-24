@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x11translation.proto\x12\x0btranslation\"*\n\x12TranslationRequest\x12\x14\n\x0c\x63hinese_word\x18\x01 \x01(\t\"K\n\x13TranslationResponse\x12\x13\n\x0btranslation\x18\x01 \x01(\t\x12\x1f\n\x17individual_translations\x18\x02 \x03(\t2d\n\x12TranslationService\x12N\n\tTranslate\x12\x1f.translation.TranslationRequest\x1a .translation.TranslationResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x11translation.proto\x12\x0btranslation\"*\n\x12TranslationRequest\x12\x14\n\x0c\x63hinese_word\x18\x01 \x01(\t\"f\n\x13TranslationResponse\x12\x13\n\x0btranslation\x18\x01 \x01(\t\x12\x1f\n\x17individual_translations\x18\x02 \x03(\t\x12\x19\n\x11\x65xample_sentences\x18\x03 \x03(\t2d\n\x12TranslationService\x12N\n\tTranslate\x12\x1f.translation.TranslationRequest\x1a .translation.TranslationResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -34,7 +34,7 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_TRANSLATIONREQUEST']._serialized_start=34
   _globals['_TRANSLATIONREQUEST']._serialized_end=76
   _globals['_TRANSLATIONRESPONSE']._serialized_start=78
-  _globals['_TRANSLATIONRESPONSE']._serialized_end=153
-  _globals['_TRANSLATIONSERVICE']._serialized_start=155
-  _globals['_TRANSLATIONSERVICE']._serialized_end=255
+  _globals['_TRANSLATIONRESPONSE']._serialized_end=180
+  _globals['_TRANSLATIONSERVICE']._serialized_start=182
+  _globals['_TRANSLATIONSERVICE']._serialized_end=282
 # @@protoc_insertion_point(module_scope)
