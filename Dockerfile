@@ -9,4 +9,4 @@ COPY . .
 
 ENV TRANSLATION_SERVICE_PORT=50051
 
-CMD ["python", "translation_service.py"]
+CMD ["python", "src/app.py"]
