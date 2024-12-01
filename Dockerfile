@@ -10,6 +10,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the source code
 COPY . .
 
+# Set Python to unbuffered mode (ensure logs show up in real-time) and set PYTHONPATH
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONPATH=/app
+
 # Development Stage
 FROM base AS development
 
