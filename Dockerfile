@@ -1,41 +1,52 @@
-# Base Stage: Install dependencies shared between dev and prod
+# Base Stage
 FROM python:3.10-slim AS base
 
 WORKDIR /app
 
-# Install dependencies
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential libssl-dev && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies globally
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the source code
+# Copy source code
 COPY . .
 
-# Set Python to unbuffered mode (ensure logs show up in real-time) and set PYTHONPATH
+# Set Python environment variables
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONPATH=/app
 
 # Development Stage
 FROM base AS development
 
-# Set environment variables for development
-ENV TRANSLATION_SERVICE_PORT=50051
-ENV FLASK_ENV=development
+# Use a non-root user for security
+RUN addgroup --system app && adduser --system --ingroup app app
+USER app
 
-# Expose the gRPC port for development
+# Development environment variables
+ENV FLASK_ENV=development
+ENV TRANSLATION_SERVICE_PORT=50051
+
+# Expose port
 EXPOSE 50051
 
-# Command for running the gRPC server in development
 CMD ["python", "src/app.py"]
 
 # Production Stage
 FROM base AS production
 
-# Set environment variables for production
-ENV TRANSLATION_SERVICE_PORT=50051
-ENV FLASK_ENV=production
+# Use a non-root user for production
+RUN addgroup --system app && adduser --system --ingroup app app
+USER app
 
-# Expose the gRPC port for production
+# Production environment variables
+ENV FLASK_ENV=production
+ENV TRANSLATION_SERVICE_PORT=50051
+
+# Expose port
 EXPOSE 50051
 
-# Command for running the gRPC server in production
 CMD ["python", "src/app.py"]
