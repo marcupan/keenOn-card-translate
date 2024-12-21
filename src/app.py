@@ -9,7 +9,7 @@ from utils.logger import logger
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     translation_pb2_grpc.add_TranslationServiceServicer_to_server(TranslationService(), server)
-    port = Config.TRANSLATION_SERVICE_PORT
+    port = Config.PORT
     server.add_insecure_port(f'[::]:{port}')
 
     # Add reflection support
