@@ -16,3 +16,7 @@ The Translation Service focuses on processing input text and returning translate
 - **Python**: Primary programming language for the service.
 - **gRPC**: Protocol for communicating with the central API.
 - **Docker**: Containerized for deployment consistency.
+
+---
+
+> **Note:** This project is not production-ready but is intended as a demonstration of my learning progress in backend development.
