@@ -4,6 +4,7 @@ from src.proto import translation_pb2, translation_pb2_grpc
 from src.config import Config
 from src.utils.logger import logger
 
+
 class TranslationService(translation_pb2_grpc.TranslationServiceServicer):
     def __init__(self):
         openai.api_key = Config.OPENAI_API_KEY
