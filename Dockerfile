@@ -1,5 +1,3 @@
-# services/keenOn-card-translate/Dockerfile
-
 FROM python:3.10-slim AS base
 WORKDIR /app
 
@@ -11,7 +9,6 @@ COPY . .
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONPATH=/app
 
-# Development Stage
 FROM base AS development
 RUN addgroup --system app && adduser --system --ingroup app app
 USER app
@@ -20,7 +17,6 @@ ENV TRANSLATION_SERVICE_PORT=50051
 EXPOSE 50051
 CMD ["python", "src/app.py"]
 
-# Production Stage
 FROM base AS production
 RUN addgroup --system app && adduser --system --ingroup app app
 USER app
