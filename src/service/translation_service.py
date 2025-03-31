@@ -11,12 +11,11 @@ class TranslationService(translation_pb2_grpc.TranslationServiceServicer):
 
     def Translate(self, request, context):
         chinese_word = request.chinese_word
-        translations = []
         individual_translations = []
         example_sentences = []
+        translation = ""
 
         try:
-            # Use OpenAI to get translation and example sentences
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
                 messages=[
@@ -28,20 +27,20 @@ class TranslationService(translation_pb2_grpc.TranslationServiceServicer):
             )
             response_text = response.choices[0].message['content'].strip().split('\n')
 
-            # Parse translation
-            translation = response_text[0].split(': ')[-1].strip()
-
-            # Parse individual character translations and example sentences
             parsing_mode = None
-            for line in response_text[1:]:
-                if "Breakdown:" in line:
+            for line in response_text:
+                line = line.strip()
+                if line.startswith("Translation:"):
+                    translation = line.split(': ')[-1].strip()
+                    parsing_mode = None  # Reset parsing mode after translation
+                elif line.startswith("Breakdown:"):
                     parsing_mode = "individual_translations"
-                elif "Example sentences:" in line:
+                elif line.startswith("Example sentences:"):
                     parsing_mode = "example_sentences"
-                elif parsing_mode == "individual_translations" and line.strip():
-                    individual_translations.append(line.strip())
-                elif parsing_mode == "example_sentences" and line.strip():
-                    example_sentences.append(line.strip())
+                elif parsing_mode == "individual_translations" and line:
+                    individual_translations.append(line)
+                elif parsing_mode == "example_sentences" and line:
+                    example_sentences.append(line)
 
         except Exception as e:
             logger.error(f"Translation failed: {str(e)}")
