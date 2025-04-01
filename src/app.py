@@ -13,14 +13,14 @@ def serve():
     port = Config.PORT
     server.add_insecure_port(f'[::]:{port}')
 
-    # Add reflection support
-    SERVICE_NAMES = (
+    service_names = (
         translation_pb2.DESCRIPTOR.services_by_name['TranslationService'].full_name,
         reflection.SERVICE_NAME,
     )
-    reflection.enable_server_reflection(SERVICE_NAMES, server)
+    reflection.enable_server_reflection(service_names, server)
 
     logger.info(f"Starting gRPC server on port {port}...")
+
     server.start()
     server.wait_for_termination()
 
