@@ -5,6 +5,7 @@ from src.proto import translation_pb2, translation_pb2_grpc
 from src.config import Config
 from src.utils.logger import logger
 
+
 class TranslationService(translation_pb2_grpc.TranslationServiceServicer):
     def __init__(self):
         openai.api_key = Config.OPENAI_API_KEY
@@ -38,7 +39,8 @@ class TranslationService(translation_pb2_grpc.TranslationServiceServicer):
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
                 messages=[
-                    {"role": "system", "content": "You are a helpful assistant that provides translations in JSON format."},
+                    {"role": "system",
+                     "content": "You are a helpful assistant that provides translations in JSON format."},
                     {"role": "user", "content": prompt_content}
                 ],
                 max_tokens=400,
@@ -70,7 +72,8 @@ class TranslationService(translation_pb2_grpc.TranslationServiceServicer):
 
 
             except (json.JSONDecodeError, ValueError, KeyError) as e:
-                logger.error(f"Failed to parse JSON response from OpenAI: {str(e)}. Raw response was: {raw_response_text}")
+                logger.error(
+                    f"Failed to parse JSON response from OpenAI: {str(e)}. Raw response was: {raw_response_text}")
                 context.set_details(f'Failed to parse OpenAI response: {str(e)}')
                 context.set_code(grpc.StatusCode.INTERNAL)
                 return translation_pb2.TranslationResponse()
